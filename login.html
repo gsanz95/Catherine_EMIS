@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--
+Colors to be used
+
+HEX: #3e4444 ("dark gray")
+
+HEX: #82b74b (light green)
+
+HEX: #405d27 (dark green)
+
+HEX: #c1946a (light brown)
+
+HEX: #ffffff (white)
+-->
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #82b74b;
+        }
+        h1 {
+            margin: 0px;
+            background-color: #3e4444;
+            color: white;
+        }
+
+        .login .pane {
+            position: fixed;
+            top:0; left:0; bottom:0; right:0;
+            width: 500px;
+            height: 400px;
+            margin: auto;
+            font-family:arial;
+
+
+            background: #3e4444;
+            padding: 22px 32px;
+        }
+
+        .login .misc {
+            position: absolute;
+            width: 100%;
+            top: 90%;
+        }
+
+        div {
+            color: white;
+
+        }
+    </style>
+
+    <title>Catherine EMIS - Login</title>
+</head>
+
+<body>
+
+<h1>Catherine EMIS</h1>
+<div class="login">
+    <div class="pane">
+        <form method="post" action="data to be sent link!!!">
+
+            <div class="form-group">
+                <label class="required-field">Username:<br></label>
+                <input type="text" name="username" required id="id_username" required class="form-control"></input>
+            </div>
+
+            <div class="form-group">
+                <label class="required-field">Password:<br></label>
+                <input type="password" name="password" required class="form-control"></input>
+            </div>
+
+            <button type="submit" class="btn btn-default btn-primary btn-block" value="Login">Login</button><br>
+
+            <div class="misc text-center">
+                <a href="password reset link!!!">Forgot your password?</a><br>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
