@@ -13,6 +13,7 @@
             margin: 0;
             background-color: #3e4444;
             color: white;
+            font-family: "Trebuchet MS";
         }
 
         .out {
@@ -21,40 +22,59 @@
             height: 38px;
         }
 
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            position: fixed;
+            background-color: #3e4444;
+            border-radius: 5px;
+        }
+
         li {
             display: inline;
             float: left;
+            border-right: 1px solid #82b74b;
+            padding: 10px 14px;
         }
 
         li a {
             display: block;
-            padding: 20px 24px;
-            background-color: #c1946a;
+            background-color: #3e4444;
             text-align: center;
+            font-weight: normal;
             color: white;
             text-decoration: none;
-            font-family: "Trebuchet MS";
-
         }
 
         li a:hover {
             background-color: #7e573f;
         }
+
+        .button {
+            background-color: #e20000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size-adjust: inherit;
+
+        }
     </style>
     <title>Catherine EMIS - Homepage</title>
 </head>
 <body>
-    <h1>Catherine EMIS
-        <button type="submit" class="button out" value="Logout">Logout</button>
-    </h1>
-
-    <h3>
+    <h1>
         <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">Bill</a></li>
-            <li><a href="">Personal Information</a></li>
-            <li><a href="">Medical Information</a></li>
+            <li>Catherine EMIS</li>
+            <li><a href="/CatherineEMIS/homepage.html">Home</a></li>
+            <li><a href="/billpage.html">Bill</a></li>
+            <li><a href="/pInfo.html">Personal Information</a></li>
+            <li><a href="/medInfo.html">Medical Information</a></li>
+            <button type="submit" class="button out" value="Logout">Logout</button>
         </ul>
-    </h3>
+
+
+    </h1>
 </body>
 </html>
