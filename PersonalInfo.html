@@ -1,5 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+Colors to be used
+
+HEX: #3e4444 ("dark gray")
+
+HEX: #82b74b (light green)
+
+HEX: #405d27 (dark green)
+
+HEX: #c1946a (light brown)
+
+HEX: #ffffff (white)
+-->
 <head>
     <meta charset="UTF-8">
     <style>
@@ -12,12 +25,147 @@
 
         h1
         {
-
+            margin: 0;
+            background-color: #3e4444;
+            color: white;
+            font-family: "Trebuchet MS";
+            text-align: left;
         }
+
+        h2
+        {
+            margin: 0;
+            background-color: #3e4444;
+            color: white;
+            font-family: "Trebuchet MS";
+            text-align: left;
+        }
+
+        li
+        {
+            display: inline;
+            float: left;
+            border-right: 2px solid #ffffff;
+            padding: 9px 51px;
+        }
+
+        li a
+        {
+            display: block;
+            background-color: #3e4444;
+            text-align: center;
+            font-weight: normal;
+            color: white;
+            text-decoration: none;
+        }
+
+        li a:hover
+        {
+            background-color: #7e573f;
+        }
+
+        ul
+        {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            position: fixed;
+            background-color: #3e4444;
+            border-radius: 5px;
+            border-bottom: solid #ffffff 1px;
+        }
+
+        .div_border_bottom
+        {
+            border-bottom: solid #ffffff 1px;
+        }
+
+        .div_next_apt
+        {
+            display: inline-block;
+            background-color: #3e4444;
+            padding: 60px;
+            margin-top: 125px;
+            margin-left: 100px;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .div_recent_info
+        {
+            display: inline-block;
+            background-color: #7e573f;
+            padding: 70px;
+            margin-top: 125px;
+            margin-left: 150px;
+            font-size: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .div_d_contact_info
+        {
+            display: block;
+            background-color: #e20000;
+            padding: 40px;
+            font-size: 30px;
+            color: white;
+            text-align: center;
+            margin: 40px 50px 5px 50px;
+        }
+
+        .button
+        {
+            background-color: #e20000;
+            color: white;
+            border: medium none;
+            border-radius: 3px;
+            font-size-adjust: inherit;
+        }
+
+        .out
+        {
+            text-align: center;
+            float: right;
+            height: 38px;
+        }
+
     </style>
+
     <title>Personal Information</title>
+
 </head>
+
 <body>
-    Hello World
+    <h1>Catherine EMIS</h1>
+    <h2>Personal Information</h2>
+    <div class="div_border_bottom"></div>
+        <ul>
+            <li><a href="/CatherineEMIS/homepage.html">Home</a></li>
+            <li><a href="/CatherineEMIS/bills.html">Bills</a></li>
+            <li><a href="/CatherineEMIS/chart.html">Chart</a></li>
+            <li><a href="/CatherineEMIS/scheduleAppointment.html">
+                Schedule Appointment
+            </a></li>
+            <button type="submit" class="button out" value="Logout">Logout</button>
+        </ul>
+
+    <section>
+        <div class="div_next_apt">
+            Next<br>Appointment
+        </div>
+        <div class="div_recent_info">
+            Recent<br>Information
+        </div>
+    </section>
+
+    <footer>
+        <div class="div_d_contact_info">
+            Doctor Contact Information
+        </div>
+    </footer>
+
 </body>
+
 </html>
