@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+$doctorContact = "";
+$nextAppt = "";
+?>
+
 <html lang="en">
 <!--
 Colors to be used
@@ -41,83 +46,30 @@ HEX: #ffffff (white)
             text-align: left;
         }
 
-        li
+        input[type=text]
         {
-            display: inline;
-            float: left;
-            border-right: 2px solid #ffffff;
-            padding: 9px 51px;
+            width: 60%;
+            padding: 10px;
+            resize: vertical;
+            border: 1px solid #3e4444;
+            font-size-adjust: inherit;
+            margin-right: 153px;
         }
 
-        li a
-        {
-            display: block;
-            background-color: #3e4444;
-            text-align: center;
-            font-weight: normal;
-            color: white;
-            text-decoration: none;
-        }
+        label {padding: 2px;}
 
-        li a:hover
-        {
-            background-color: #7e573f;
-        }
-
-        ul
-        {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            position: fixed;
-            background-color: #3e4444;
-            border-radius: 5px;
-            border-bottom: solid #ffffff 1px;
-        }
-
-        .div_border_bottom
-        {
-            border-bottom: solid #ffffff 1px;
-        }
-
-        .div_next_apt
-        {
-            display: inline-block;
-            background-color: #3e4444;
-            padding: 60px;
-            margin-top: 125px;
-            margin-left: 100px;
-            font-size: 30px;
-            text-align: center;
-        }
-
-        .div_recent_info
-        {
-            display: inline-block;
-            background-color: #7e573f;
-            padding: 70px;
-            margin-top: 125px;
-            margin-left: 150px;
-            font-size: 30px;
-            color: white;
-            text-align: center;
-        }
-
-        .div_d_contact_info
-        {
-            display: block;
-            background-color: #e20000;
-            padding: 40px;
-            font-size: 30px;
-            color: white;
-            text-align: center;
-            margin: 40px 50px 5px 50px;
-        }
-
-        .button
+        .logout_button
         {
             background-color: #e20000;
+            color: white;
+            border: medium none;
+            border-radius: 3px;
+            font-size-adjust: inherit;
+        }
+
+        .edit
+        {
+            background-color: #bcb8ba;
             color: white;
             border: medium none;
             border-radius: 3px;
@@ -131,6 +83,44 @@ HEX: #ffffff (white)
             height: 38px;
         }
 
+        .buttons_bar
+        {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background-color: #3e4444;
+            border-radius: 5px;
+            border-bottom: solid #ffffff 1px;
+        }
+
+
+        .buttons_in_bar
+        {
+            display: inline-block;
+            padding: 9px 51px;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            text-align: center;
+            font-weight: normal;
+            float: left;
+            color: white;
+        }
+
+        .buttons_in_bar:hover {background-color: #7e573f;}
+
+        .container
+        {
+            background-color: #f2f2f2;
+            margin: 75px;
+            padding: 20px;
+        }
+
+        .div_border_bottom {border-bottom: solid #ffffff 1px;}
+
+        .div_big_separator {padding: 10px;}
+
+        .div_small_separator {padding: 2px;}
     </style>
 
     <title>Personal Information</title>
@@ -141,30 +131,64 @@ HEX: #ffffff (white)
     <h1>Catherine EMIS</h1>
     <h2>Personal Information</h2>
     <div class="div_border_bottom"></div>
-        <ul>
-            <li><a href="/CatherineEMIS/homepage.html">Home</a></li>
-            <li><a href="/CatherineEMIS/bills.html">Bills</a></li>
-            <li><a href="/CatherineEMIS/chart.html">Chart</a></li>
-            <li><a href="/CatherineEMIS/scheduleAppointment.html">
-                Schedule Appointment
-            </a></li>
-            <button type="submit" class="button out" value="Logout">Logout</button>
-        </ul>
+    <ul class="buttons_bar">
+        <li class="buttons_in_bar"><a href="/CatherineEMIS/homepage.html">Home</a></li>
+        <li class="buttons_in_bar"><a href="/CatherineEMIS/bills.html">Bills</a></li>
+        <li class="buttons_in_bar"><a href="/CatherineEMIS/MedicalChart.html">Medical Chart</a></li>
+        <li class="buttons_in_bar"><a href="/CatherineEMIS/scheduleAppointment.html">
+            Schedule Appointment
+        </a></li>
+        <button type="submit" class="logout_button out" value="Logout">Logout</button>
+    </ul>
 
-    <section>
-        <div class="div_next_apt">
-            Next<br>Appointment
-        </div>
-        <div class="div_recent_info">
-            Recent<br>Information
-        </div>
-    </section>
+    <div class="container">
+        <form>
+            <!-- user name -->
+            <label for="username">Username:</label>
+            <div class="div_small_separator"></div>
+            <input type="text" id="username" name="username"
+                   placeholder="put php uname">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- password -->
+            <label for="password">Password:</label>
+            <div class="div_small_separator"></div>
+            <input type="text" id="password" name="password"
+                   placeholder="put php pw">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- first name -->
+            <label for="first name">First Name:</label>
+            <div class="div_small_separator"></div>
+            <input type="text" id="first name" name="first name"
+                   placeholder="put php fname">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- middle name -->
+            <label for="middle name">Middle Name:</label>
+            <div class="div_small_separator"></div>
+            <input type="text" id="middle name" name="middle name"
+                   placeholder="put php mname">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- date of birth -->
+            <label for="last name">Last Name:</label>
+            <div class="div_small_separator"></div>
+            <input type="text" id="last name" name="last name"
+                   placeholder="put php dob">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_big_separator"></div>
+            <!-- date of birth -->
+            <p>Home Address</p>
+            <label for="date of birth">Date of Birth:</label>
+            <div class="div_small_separator"></div>
+            <input type="text" id="date of birth" name="date of birth"
+                   placeholder="put php dob">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
 
-    <footer>
-        <div class="div_d_contact_info">
-            Doctor Contact Information
-        </div>
-    </footer>
+        </form>
+    </div>
 
 </body>
 
