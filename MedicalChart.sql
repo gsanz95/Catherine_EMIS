@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 28, 2017 at 02:43 PM
+-- Generation Time: Aug 01, 2017 at 05:56 PM
 -- Server version: 5.5.57-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.21
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `MedicalChart` (
   `person_id` int(11) NOT NULL,
   `doctor_id` int(11) NOT NULL,
   `vitals_date` date NOT NULL,
-  `blood_press` int(11) NOT NULL,
+  `blood_press` varchar(8) NOT NULL,
   `weight` int(11) NOT NULL,
   `height` int(11) NOT NULL,
   `temp` int(11) NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `MedicalChart` (
 --
 
 INSERT INTO `MedicalChart` (`id`, `person_id`, `doctor_id`, `vitals_date`, `blood_press`, `weight`, `height`, `temp`, `blood_sugar`, `diagnosis`, `treatment`, `prescription`, `lab_test`) VALUES
-(1, 2, 5, '2017-07-26', 123456, 2147483647, 20, 456, 456, 'died', 'none', 'all', 'many');
+(1, 2, 5, '2017-07-26', '123/456', 2147483647, 20, 456, 456, 'died', 'none', 'all', 'many');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
