@@ -53,7 +53,6 @@ HEX: #ffffff (white)
             resize: vertical;
             border: 1px solid #3e4444;
             font-size-adjust: inherit;
-            margin-right: 153px;
         }
 
         label {padding: 2px;}
@@ -116,6 +115,7 @@ HEX: #ffffff (white)
             padding: 20px;
         }
 
+        .indent {padding-left: 15px;}
         .div_border_bottom {border-bottom: solid #ffffff 1px;}
 
         .div_big_separator {padding: 10px;}
@@ -171,22 +171,135 @@ HEX: #ffffff (white)
                    placeholder="put php mname">
             <button type="submit" class="edit out" value="Edit">Edit</button>
             <div class="div_small_separator"></div>
-            <!-- date of birth -->
+            <!-- last name -->
             <label for="last name">Last Name:</label>
             <div class="div_small_separator"></div>
             <input type="text" id="last name" name="last name"
-                   placeholder="put php dob">
+                   placeholder="put php lname">
             <button type="submit" class="edit out" value="Edit">Edit</button>
-            <div class="div_big_separator"></div>
+            <div class="div_small_separator"></div>
             <!-- date of birth -->
-            <p>Home Address</p>
             <label for="date of birth">Date of Birth:</label>
             <div class="div_small_separator"></div>
             <input type="text" id="date of birth" name="date of birth"
                    placeholder="put php dob">
             <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_big_separator"></div>
+            <!-- Home address info -->
+            <p>Home Address</p>
+            <!-- street -->
+            <label class=indent for="street">Street:</label>
             <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="street" name="street"
+                   placeholder="put php street">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- zip -->
+            <label class=indent for="zip">Zip:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="zip" name="zip"
+                   placeholder="put php zip">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- state -->
+            <label class=indent for="state">State:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="state" name="state"
+                   placeholder="put php state">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- city -->
+            <label class=indent for="city">City:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="city" name="city"
+                   placeholder="put php city">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- appartment # -->
+            <label class=indent for="appt#">Appartment Number:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="appt#" name="appt#"
+                   placeholder="put php appt#">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_big_separator"></div>
+            <!-- Contact Info -->
+            <p>Contact Information</p>
+            <!-- home phone -->
+            <label class=indent for="homephone">Home Phone:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="homephone" name="homephone"
+                   placeholder="put php homephone">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- cell phone -->
+            <label class=indent for="cellphone">Cell Phone:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="cellphone" name="cellphone"
+                   placeholder="put php cellphone">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- email address -->
+            <label class=indent for="eAddr">Cell Phone:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="eAddr" name="eAddr"
+                   placeholder="put php email">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_big_separator"></div>
+            <!-- SSN -->
+            <label for="SocialSecNum">Social Security Number:</label>
+            <div class="div_small_separator"></div>
+            <input type="text" id="SocialSecNum" name="SSN"
+                   placeholder="put php SSN">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_big_separator"></div>
+            <!-- Insurance Provider Info -->
+            <p>Insurance Provider Information</p>
+            <!-- company name -->
+            <label class=indent for="compName">Company Name:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="compName" name="compName"
+                   placeholder="put php compName">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- group id -->
+            <label class=indent for="groupID">Group ID:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="groupID" name="groupID"
+                   placeholder="put php groupID">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- policy number -->
+            <label class=indent for="policy#">Policy Number:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="policy#" name="policy#"
+                   placeholder="put php policy#">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_big_separator"></div>
+            <!-- Emergency Contact Info -->
+            <p>Emergency Contact Information</p>
+            <!-- EC first name -->
+            <label class=indent for="ecFirstName">Emergency Contact First Name:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="ecFirstName" name="ecFirstName"
+                   placeholder="put php ecFirstName">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- EC last name -->
+            <label class=indent for="ecLastName">Emergency Contact Last Name:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="ecLastName" name="ecLastName"
+                   placeholder="put php ecLastName">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_small_separator"></div>
+            <!-- EC prime Number -->
+            <label class=indent for="ecPrime#">Emergency Contact Prime Number:</label>
+            <div class="div_small_separator"></div>
+            <input style="margin-left: 15px;" type="text" id="ecPrime#" name="ecPrime#"
+                   placeholder="put php ecPrime#">
+            <button type="submit" class="edit out" value="Edit">Edit</button>
+            <div class="div_big_separator"></div>
 
+            
         </form>
     </div>
 
