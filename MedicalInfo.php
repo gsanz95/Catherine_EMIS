@@ -9,8 +9,17 @@ $mysqli = mysqli_connect("localhost", "g418", "se5se5", "CatherineEMIS");
         die("Connection failed: " . $mysqli->connect_error);
     }
     #echo "connected successfully!";
-$_SESSION["patient"] = "asdf";
+#$_SESSION["patient"] = "asdf";
 $_SESSION["username"] = "Doctorman";
+
+$patient = null;
+if(!empty($_GET["patient"])){
+    echo $_GET["patient"];
+    $_SESSION["patient"] = $_GET["patient"];
+    $patient = $_SESSION["patient"];
+
+}
+
 ?>
 
 <!--
@@ -162,9 +171,9 @@ input[type=text]:focus
     $firstName = $mysqli->query("SELECT first FROM User WHERE username = '$CurrUser'")->fetch_object()->first;
     $lastName = $mysqli->query("SELECT last FROM User WHERE username = '$CurrUser'")->fetch_object()->last;
     $userType = $mysqli->query("SELECT type FROM User WHERE username = '$CurrUser'")->fetch_object()->type;
-
-
-    echo "<h2> Hello! $CurrUser First Name: $firstName Last Name: $lastName";
+    echo $_SESSION["patient"];
+    echo "<p><\p>";
+    echo "<h2> Hello! $CurrUser First Name: $firstName Last Name: $lastName UserType: $userType</h2>";
     if($userType == 'U') { #PATIENT
 
         #Pull User Info from Medical Chart table IF Patient LEVEL
@@ -174,7 +183,6 @@ input[type=text]:focus
         $doctorFirst = $mysqli->query("SELECT first FROM User WHERE id = '$doctorID'")->fetch_object()->first;
         $doctorLast = $mysqli->query("SELECT last FROM User WHERE id = '$doctorID'")->fetch_object()->last;
         #Simply depict User(Patient) Info to the User
-        echo " UserType: Patient </h2>";
         echo "<p> Doctor: Dr. $doctorFirst, $doctorLast </p>";
         echo "<h1> Last Vitals Date: $medChart->vitals_date </h1>";
         echo "<p> Blood Pressure:  $medChart->blood_press </p>";
@@ -188,7 +196,7 @@ input[type=text]:focus
         echo "<p> Diagnosis: $medChart->lab_test</p>";
 
         #Check if Doctor or Nurse is attempting to access page
-    } elseif(isset($_SESSION["patient"]) && (($userType == 'D') || ($userType == 'N'))){ #DOCTOR OR NURSE w/ PATIENT SELECTED
+    } elseif(!(is_null($patient)) && (($userType == 'D') || ($userType == 'N'))){ #DOCTOR OR NURSE w/ PATIENT SELECTED
 
         #Pull Patient Info From User Table
         $patient = $_SESSION["patient"];
@@ -203,7 +211,6 @@ input[type=text]:focus
         $doctorFirst = $mysqli->query("SELECT first FROM User WHERE id = '$doctorID'")->fetch_object()->first;
         $doctorLast = $mysqli->query("SELECT last FROM User WHERE id = '$doctorID'")->fetch_object()->last;
         #Simply depict User(Patient) Info to the User
-        echo " UserType: $userType </h2>";
         echo "<hr>";
         echo "<p></p>";
         echo "<p> Patient Name: $pfirstName $plastName</p>";
@@ -219,39 +226,40 @@ input[type=text]:focus
         echo "<p> Diagnosis: $medChart->prescription</p>";
         echo "<p> Diagnosis: $medChart->lab_test</p>";
     } elseif ((($userType == 'D') || ($userType == 'N'))){ #DOCTOR OR NURSE
-        echo " UserType: $userType </h2>";
-        echo "<p>a</p>";
-        echo "<p>a</p>";
-        echo "<p>a</p>";
-        echo "<p>a</p>";
+
         # <!--Search bar-->
-       # echo "<form  action =" '<?php iecho $_SERVER['PHP_Self']; '" >";
-        echo "<input type = \"text\" name=\"query\" placeholder=\"Search    by username, first name, or last name\"/><br />";
+        echo "<form  action =\"\" method = \"GET\" >";
+        echo "<input type = \"text\" name=\"query\" placeholder=\"Search\"/><br>";
         echo "<input type=\"submit\" value=\"search\"/>";
         echo "</form>";
         #the following segment are from multiple sources on the web
-        if(!empty($_REQUEST['query'])) {
-            $search = mysqli_real_escape_string($_REQUEST['query']);
-            $query = "SELECT * FROM User WHERE username LIKE \"$search\"";
-            $searchMedRec = $mysqli->query($query);
+        if(!empty($_GET["query"])) {
+            $search = $_GET["query"];
+            echo $_GET["query"];
+            echo "You entered $search";
+            $queryResult = $mysqli->query("SELECT * FROM User WHERE username LIKE '%$search%'");
 
-            while ($row = mysqli_fetch_array($searchMedRec)) {
-                $username = $row['username'];
-                $pfirstName = $row['first'];
-                $plastName = $row['last'];
-                echo "<p> $username $pfirstName $plastName</p>";
+
+            while ($row = mysqli_fetch_array($queryResult)) {
+                $username = $row["username"];
+                $pfirstName = $row["first"];
+                $plastName = $row["last"];
+                echo "<form action=\"\" method = \"GET\">";
+                echo "<input type=\"hidden\" name = \"patient\" value = $username>";
+                echo "$username $pfirstName $plastName <input type = 'submit' name =\"$username\" value = \"choose\">";
+                echo "</form>";
+
+                }
             }
 
-            if (mysqli_num_rows($searchMedRec) > 0) {
+            if (mysqli_num_rows($row) == 0) {
                 echo "No results";
             }
-        }
 
 
 
         #Check if patient is SET and Doctor or Nurse is attempting to access page
     }
-
 
 ?>
 
