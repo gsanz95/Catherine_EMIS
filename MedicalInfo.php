@@ -217,14 +217,11 @@ $_SESSION["update"] == false;
                       <p>Patient Name:$pfirstName $plastName</p>
                       
                       <!-- Doctor Name -->
-                      <p>Doctor Name:Dr. $doctorLast, $doctorFirst</p>
-                     
-                      <!-- Vitals Date -->
                         <div class =\"div_small_separator\"></div>
-                        <label for=\"VitalsDate\">Last Vitals Date:</label>
+                        <label for=\"DoctorName\">Doctor Name:</label>
                         <div class =\"div_small_separator\"></div>
-                        <input type =\"text\" id =\"VitalsDate\" name =\"VitalsDate\"
-                                placeholder= \"$medChart->vitals_date\">
+                        <input type =\"text\" id =\"DoctorName\" name =\"DoctorName\"
+                                placeholder= \"Dr.$doctorLast, $doctorFirst\">
                      
                       <!-- Blood Pressure -->
                         <div class =\"div_small_separator\"></div>
@@ -259,8 +256,12 @@ $_SESSION["update"] == false;
                         <label for=\"BloodSugar\">Blood Sugar:</label>
                         <div class =\"div_small_separator\"></div>
                         <input type =\"text\" id =\"BloodSugar\" name =\"BloodSugar\"
-                                placeholder= \"$medChart->blood_sugar\">
-                                
+                                placeholder= \"$medChart->blood_sugar\">";
+
+        if($userType == 'D'){
+            echo "
+            
+        
                       <!-- Diagnosis -->
                         <div class =\"div_small_separator\"></div>
                         <label for=\"Diagnosis\">Diagnosis</label>
@@ -291,7 +292,15 @@ $_SESSION["update"] == false;
                                 
                         <div class =\"div_small_separator\"></div>
                         <input type=\"hidden\" name = \"patient\" value = $patient>
-                        <input type =\"submit\" value =\"update\"/>
+                        <input type =\"submit\" value =\"update\"/>";
+                        } else {
+            echo "  <p>Diagnosis:$mecChart->diagnosis</p>
+                    <p>Treatment:$medChart->treatment</p>
+                    <p>Prescription:$medChart->prescription</p>
+                    <p>Lab Test:$medChart->lab_test</p>
+                ";
+        }
+              echo"
                     </form>
                 </div>";
 
@@ -361,7 +370,11 @@ $_SESSION["update"] == false;
                                           WHERE person_id = '$patientID'";
             echo $query;
             $queryResult = $mysqli->query($query);
-        };
+            }
+     #   if($_SESSION["update"]==true) {
+     #       ob_end_flush();
+     #       mysqli_refresh($mysqli);
+     #   }
     } elseif ((($userType == 'D') || ($userType == 'N'))) { #DOCTOR OR NURSE
         #<!-- Title Line -->
         if ($userType == 'N') {
