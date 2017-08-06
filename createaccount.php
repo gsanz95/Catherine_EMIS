@@ -47,14 +47,17 @@ if(!$myconnect)
         $_SESSION['username'] = $username;
 
         $sql = "INSERT INTO User (first, last, username, password, type)
-                VALUES('$first','$last','$username','$password','1')";
+                VALUES('$first','$last','$username','$password','U')";
         $res1 = mysqli_query($myconnect,$sql);
         $user_id = "SELECT id FROM User WHERE username = '$username'";
         $user_id = mysqli_fetch_object($user_id);
-        $sql2= "UPDATE AccountInfo SET middle_name='$middle',dob ='$dob',add_street='$street',zip='$zip',state='$state',
+        $sql2= "INSERT INTO `AccountInfo`(user_id`, `middle_name`, `dob`, `add_street`, `zip`, `state`, `city`, `appart_num`, `home_phone`, `cell_phone`, `email`, `ssn`, `insur_comp`, `insur_group_id`, `insur_policy_num`, `emerg_first`, `emerg_last`, `emerg_phone`, `gender`)
+                VALUES ($user_id,$middle,$dob,$street,$zip,$state,$city,$apartmentnum,$homeph,$cellph,$email,$ssn,$insurcomp,$insurid,$insurnum,$efirst,$elast,$ephone,$gender)";
+
+                /*"UPDATE AccountInfo SET middle_name='$middle',dob ='$dob',add_street='$street',zip='$zip',state='$state',
                 city='$city',appart_num='$apartmentnum',home_phone='$homeph',cell_phone='$cellph',email='$email',
                 ssn='$ssn',insur_comp='$insurcomp',insur_group_id='$insurid',insur_policy_num='$insurnum',
-                emerg_first='$efirst',emerg_last='$elast',emerg_phone='$ephone',gender='$gender' WHERE user_id='$user_id'";
+                emerg_first='$efirst',emerg_last='$elast',emerg_phone='$ephone',gender='$gender' WHERE user_id='$user_id'";*/
 
         if(mysqli_query($sql) == true && mysqli_query($sql2) == true)
         {
@@ -74,7 +77,7 @@ if(!$myconnect)
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" type="text/css" href="styles.css" />
 <head>
     <style>
         td
