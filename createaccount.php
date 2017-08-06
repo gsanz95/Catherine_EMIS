@@ -2,13 +2,22 @@
 session_start();
 $_SESSION['message']= '';
 
-$myconnect = new mysqli('72.177.239.232','group','group5','group');
 
-if($_SERVER['REQUEST_METHOD'] == 'POST')
+$dbhost='127.0.0.1';
+$dbuser='root';
+$dbpass='password';
+$myconnect = mysqli_connect($dbhost,$dbuser,$dbpass,'CatherineEMIS');
+
+if(!$myconnect)
 {
+    die("Connection Failed: ".mysqli_connect_error());
+}
     if($_POST['password'] == $_POST['confirmpassword'])
     {
-        $username = $myconnect->real_escape_string($_POST['password']);
+        if(isset($_POST['username']))
+        {
+            $username = $myconnect->real_escape_string($_POST['username']);
+        }
         $email = $myconnect->real_escape_string($_POST['email']);
         $password = $_POST['password'];
         $first = $_POST['first'];
@@ -31,19 +40,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
         $ephone = $_POST['ephone'];
         $gender = $_POST['gender'];
 
+        echo $first;
+        echo $password;
+        echo $last;
+
         $_SESSION['username'] = $username;
 
-        $sql = myconnect("INSERT INTO User (first, last, username, password, type)"
-            ."VALUES(’$first','$last','$username','$password','1')");
-        $user_id = myconnect("SELECT id FROM User WHERE username = '$username'");
+        $sql = "INSERT INTO User (first, last, username, password, type)
+                VALUES('$first','$last','$username','$password','1')";
+        $res1 = mysqli_query($myconnect,$sql);
+        $user_id = "SELECT id FROM User WHERE username = '$username'";
         $user_id = mysqli_fetch_object($user_id);
-        $sql2= myconnect("INSERT INTO AccountInfo(user_id,middle_name,dob,add_street,zip,state,city,appart_num,home_phone,cell_phone,email,ssn,insur_comp,insur_group_id,insur_policy_num,emerg_first,emerg_last,emerg_phone,gender)"
-            ."VALUES('$user_id','$middle','$dob','$street','$zip','$state','$city','$apartmentnum','$homeph','$cellph','$email','$ssn','$insurcomp','$insurid','$insurnum','$efirst','$elast','$ephone','$gender')");
+        $sql2= "UPDATE AccountInfo SET middle_name='$middle',dob ='$dob',add_street='$street',zip='$zip',state='$state',
+                city='$city',appart_num='$apartmentnum',home_phone='$homeph',cell_phone='$cellph',email='$email',
+                ssn='$ssn',insur_comp='$insurcomp',insur_group_id='$insurid',insur_policy_num='$insurnum',
+                emerg_first='$efirst',emerg_last='$elast',emerg_phone='$ephone',gender='$gender' WHERE user_id='$user_id'";
 
         if(mysqli_query($sql) == true && mysqli_query($sql2) == true)
         {
             $SESSION['message'] = "Account Successfully Created";
-            header("location: homepage.php");
+            header("Location:homepage.php");
 
         }
         else
@@ -55,16 +71,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $_SESSION['message']= "Passwords don't match!";
     }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="styles.css" />
 <head>
     <style>
         td
         {
             width: 200px;
+        }
+        input[type=password]
+        {
+            width: 100%;
+            padding: 10px;
+            resize: vertical;
+            border: 1px solid #3e4444;
+            font-size-adjust: inherit;
         }
 
     </style>
@@ -85,28 +108,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 </ul>
 
 
-<form method="post" class="form-group" action="createaccount.html" >
+<form method="POST" class="form-group" action="homepage.html" >
     <div class="container">
         <table>
             <tr>
                 <td>Username:</td>
-                <td><input type="ctext" name="username"></td>
+                <td><input type="ctext" name="username" required></td>
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><input  type="ctext" name="password"></td>
+                <td><input  type="password" name="password" required></td>
             </tr>
             <tr>
                 <td>Confirm Password:</td>
-                <td><input type="ctext" name="confirmpassword"></td>
+                <td><input type="password" name="confirmpassword" required></td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td><input type="ctext" name="email"></td>
+                <td><input type="ctext" name="email" required></td>
             </tr>
             <tr>
                 <td>First Name:</td>
-                <td><input type="ctext" name="first"></td>
+                <td><input type="ctext" name="first" required></td>
             </tr>
             <tr>
                 <td>Middle Name:</td>
@@ -114,7 +137,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
             </tr>
             <tr>
                 <td>Last Name:</td>
-                <td><input type="ctext" name="last"></td>
+                <td><input type="ctext" name="last" required></td>
             </tr>
         </table>
 
@@ -125,23 +148,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
         <table>
             <tr>
                 <td>Date of Birth (mm/dd/yyyy):</td>
-                <td><input type="ctext" name="dob"></td>
+                <td><input type="ctext" name="dob" required></td>
             </tr>
             <tr>
                 <td>Street Address:</td>
-                <td><input type="ctext" name="street"></td>
+                <td><input type="ctext" name="street" required></td>
             </tr>
             <tr>
                 <td>Zip Code:</td>
-                <td><input type="ctext" name="zip"></td>
+                <td><input type="ctext" name="zip" required></td>
             </tr>
             <tr>
                 <td>State:</td>
-                <td><input type="ctext" name="state"></td>
+                <td><input type="ctext" name="state" required></td>
             </tr>
             <tr>
                 <td>City:</td>
-                <td><input type="ctext" name="city"></td>
+                <td><input type="ctext" name="city" required></td>
             </tr>
             <tr>
                 <td>Apt. #:</td>
@@ -157,7 +180,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
             </tr>
             <tr>
                 <td>SocialSecurity Number:</td>
-                <td><input type="ctext" name="ssn"></td>
+                <td><input type="ctext" name="ssn" required></td>
             </tr>
             <tr>
                 <td>Insurance Company Name:</td>
@@ -184,10 +207,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
                 <td><input type="ctext" name="ephone"></td>
             </tr>
         </table>
+        <input type="submit" class="button" value="Submit" />
     </div>
 </form>
-<button type="submit" class="button" value="Submit" >
-    Submit<br>
-</button>
 </body>
 </html>
