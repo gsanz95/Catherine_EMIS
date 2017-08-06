@@ -40,9 +40,9 @@ if(!$myconnect)
         $ephone = $_POST['ephone'];
         $gender = $_POST['gender'];
 
-        echo $first;
+        /*echo $first;
         echo $password;
-        echo $last;
+        echo $last;*/
 
         $_SESSION['username'] = $username;
 
