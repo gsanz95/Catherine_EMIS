@@ -46,6 +46,13 @@ HEX: #ffffff (white)
             top: 90%;
         }
 
+        .login .new
+        {
+            position: absolute;
+            width: 100%;
+            top: 85%;
+        }
+
         .button {
             background-color: #c1946a;
             color: #ffffff;
@@ -107,14 +114,14 @@ HEX: #ffffff (white)
 <h1>Catherine EMIS</h1>
 <div class="login">
     <div class="pane">
-        <form method="post" action="data to be sent link!!!">
+        <form method="post" action="auth.php">
             <div>
                 <h2>Login</h2>
             </div>
 
             <div class="form-group">
                 <label class="required-field">Username:<br></label>
-                <input type="text" name="username" required id="id_username" required class="form-control"></input>
+                <input type="text" name="username" required id="id_username" class="form-control"></input>
             </div>
 
             <div class="form-group">
@@ -123,6 +130,10 @@ HEX: #ffffff (white)
             </div>
 
             <button type="submit" class="button" value="Login"><span>Login</span></button><br>
+
+            <div class="new text-center">
+                <a href="createaccount.php">Create a New Account</a><br>
+            </div>
 
             <div class="misc text-center">
                 <a href="password reset link!!!">Forgot your password?</a><br>
