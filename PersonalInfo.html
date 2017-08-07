@@ -1,7 +1,21 @@
 <!DOCTYPE html>
 <?php
-$doctorContact = "";
-$nextAppt = "";
+    session_start();
+    $_SESSION['message']='';
+
+
+    $dbhost = '127.0.0.1';
+    $dbuser = 'root';
+    $dbpass = 'password';
+    $myconnect = mysqli_connect($dbhost, $dbuser, $dbpass, 'CatherineEMIS');
+
+
+    if(!$myconnect)
+    {
+        die("Connection failed: " .mysqli_connect_error());
+    }
+
+
 ?>
 
 <html lang="en">
@@ -55,6 +69,19 @@ HEX: #ffffff (white)
             font-size-adjust: inherit;
         }
 
+        input[type=submit]
+        {
+            background-color: #e20000;
+            border-radius: 4px;
+            border: medium none;
+            color: white;
+            font-size-adjust: inherit;
+            margin-left: 10px;
+            padding: 12px 20px;
+        }
+
+        input[type=submit]:hover {background-color: #bc0719;}
+
         label {padding: 2px;}
 
         .logout_button
@@ -91,22 +118,23 @@ HEX: #ffffff (white)
             background-color: #3e4444;
             border-radius: 5px;
             border-bottom: solid #ffffff 1px;
+            position: absolute;
         }
 
 
-        .buttons_in_bar
+        .buttons_in_bar a
         {
             display: inline-block;
             padding: 9px 51px;
             border-right: 2px solid #ffffff;
-            border-bottom: 2px solid #ffffff;
             text-align: center;
             font-weight: normal;
             float: left;
             color: white;
+            text-decoration: none;
         }
 
-        .buttons_in_bar:hover {background-color: #7e573f;}
+        .buttons_in_bar a:hover {background-color: #7e573f;}
 
         .container
         {
@@ -116,6 +144,7 @@ HEX: #ffffff (white)
         }
 
         .indent {padding-left: 15px;}
+
         .div_border_bottom {border-bottom: solid #ffffff 1px;}
 
         .div_big_separator {padding: 10px;}
@@ -299,7 +328,7 @@ HEX: #ffffff (white)
             <button type="submit" class="edit out" value="Edit">Edit</button>
             <div class="div_big_separator"></div>
 
-            
+            <input type="submit" value="Submit">
         </form>
     </div>
 
