@@ -4,7 +4,7 @@
     //Start session: test for individual page to use session variables;
     //will be redundant once login page creates session.
     session_start();
-$mysqli = mysqli_connect("localhost", "root", "password", "CatherineEMIS");
+$mysqli = mysqli_connect("localhost", "root", "slowpokesale", "mysql");
     if($mysqli->connect_error) {
         die("Connection failed: " . $mysqli->connect_error);
     }
