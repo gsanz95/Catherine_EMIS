@@ -14,6 +14,9 @@ session_start();
 
 #For testing purposes
 #$_SESSION["username"] = "Doctorman"; #Doctorman
+#$_SESSION['logged_in'] = TRUE;
+
+
 if($_SESSION['logged_in'] == TRUE){
     $username = $_SESSION['username'];
     $password = $_SESSION['password'];
@@ -195,10 +198,10 @@ for($y = 1; $y <= $rows; $y++) {
 
 
 <ul>
-    <li><a href="/CatherineEMIS/homepage.html">Home</a></li>
-    <li><a href="/CatherineEMIS/BillPage.html">Bill</a></li>
-    <li><a href="/CatherineEMIS/PersonalInfo.html">Personal Information</a></li>
-    <li><a href="/MedicalInfo.html">Medical Information</a></li>
+    <li><a href="/CatherineEMIS/homepage.php">Home</a></li>
+    <li><a href="/CatherineEMIS/BillPage.php">Bill</a></li>
+    <li><a href="/CatherineEMIS/PersonalInfo.php">Personal Information</a></li>
+    <li><a href="/MedicalInfo.php">Medical Information</a></li>
     <button type="submit" class="button out" value="Logout">Logout</button>
 </ul>
 
