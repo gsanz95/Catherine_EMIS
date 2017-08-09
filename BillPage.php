@@ -9,11 +9,31 @@
 <!DOCTYPE html>
 <?php
 
+session_start();
+
+
+#For testing purposes
+#$_SESSION["username"] = "Doctorman"; #Doctorman
+
+$username = $_SESSION['username'];
+$password = $_SESSION['password'];
+
+
+
+
     #Login to SQL database
     $mysqli = mysqli_connect("localhost", "root", "slowpokesale", "mysql");
      if($mysqli->connect_error) {
          die("Connection failed: " . $mysqli->connect_error);
      }
+
+     $lUser = $mysqli->query("SELECT id FROM User WHERE username = '$username'")
+         ->fetch_object()->id;
+
+    $userType = $mysqli->query("SELECT type FROM User WHERE username = '$username'")
+        ->fetch_object()->type;
+    echo "$userType";
+
 ?>
 <html lang="en">
 <head>
@@ -136,6 +156,7 @@
 
 <?php
 
+#initialize arrays
 $pMessage = array();
 $pDate = array();
 $pAmount = array();
@@ -152,26 +173,21 @@ for($y = 1; $y <= $rows; $y++) {
     $id = $mysqli->query("SELECT person_id FROM Bills WHERE id = '$y'")
         ->fetch_object()->person_id;
 
-
-
-
-    if ($id == 2) {
+    if ($id == $lUser) {
 
         $numEntry++;
 
 
-        $pMessage[] = $mysqli->query("SELECT DISTINCT message FROM Bills WHERE person_id = '2' AND id = $y ")
+        $pMessage[] = $mysqli->query("SELECT DISTINCT message FROM Bills WHERE person_id = '$lUser' AND id = $y ")
             ->fetch_object()->message;
 
-        $pAmount[] = $mysqli->query("SELECT amount FROM Bills WHERE person_id = '2' AND id = $y ")
+        $pAmount[] = $mysqli->query("SELECT amount FROM Bills WHERE person_id = '$lUser' AND id = $y ")
             ->fetch_object()->amount;
 
-        $pDate[] = $mysqli->query("SELECT date FROM Bills WHERE person_id = '2' AND id = $y")
+        $pDate[] = $mysqli->query("SELECT date FROM Bills WHERE person_id = '$lUser' AND id = $y")
             ->fetch_object()->date;
     }
-
 }
-
 ?>
 
 
@@ -187,33 +203,117 @@ for($y = 1; $y <= $rows; $y++) {
 
 <div class="div_below_header"></div>
 
+<?php
+
+if($userType == 'U') {
+
+    echo "<td>Bill Info for: \"$username\" </td>
 
 <tr>
-    <td colspan = "10">
-        <div class="scrollit", style="width: 80%">
-            <table style="width: 80%">
-
-
+    <td colspan = \"10\">
+        <div class=\"scrollit\", style=\"width: 80%\", border: 5px solid red>
+            <table style=\"width: 80%\">
+                
                 <tr>
-                    <?php echo "<th><tab5>Message: </tab5></th>" ?>
-                    <?php echo "<th><tab5>Amount</tab5></th>" ?>
-                    <?php echo "<th><tab5>Date:</tab5></th>" ?>
-                </tr>
+                     <th><tab5>Message: </tab5></th>
+                     <th><tab5>Amount</tab5></th>
+                      <th><tab5>Date: </tab5></th>
+                 </tr>
+                ";
 
-                <?php
                 for ($x = 0; $x < $numEntry; $x++){
 
-                        echo "<tr><td> $pMessage[$x] </td><td>$pAmount[$x]</td><td>$pDate[$x] </td></tr>";
-                };
-                ?>
+                       echo " <tr><td > $pMessage[$x] </td ><td > $pAmount[$x]</td ><td > $pDate[$x] </td ></tr> ";
+                 };
 
+                echo "
             </table>
         </div>
     </td>
 </tr>
+";
+}elseif($userType == 'D' || $userType == 'R'){
+    $username = "";
+    echo "Search Patient";
+
+    echo "<form  action =\"\" method = \"GET\" >
+                <input type = \"text\" name=\"query\" placeholder=\"Search\"/><br>
+                <input type=\"submit\" value=\"search\"/>
+                </form>";
+
+if (!empty($_GET["query"])) {
+    $search = $_GET["query"];
+    # echo $_GET["query"];
+    # echo "You entered $search";
+    $queryResult = $mysqli->query("SELECT * FROM User WHERE username LIKE '%$search%' OR first LIKE '%$search%' OR last LIKE '%$search%'");
+    echo "<div class=\"container\">
+                    Results:";
+
+    while ($row = mysqli_fetch_array($queryResult)) {
+        $username = $row["username"];
+        $pfirstName = $row["first"];
+        $plastName = $row["last"];
+        $cUserType = $row["type"];
+        echo "<form action=\"\" method = \"GET\">
+                      <input type=\"hidden\" name = \"patient\" value = $username>
+                      <p>Type: $cUserType UserName: $username Name:$pfirstName,$plastName  </p>";
+
+    }
+    echo "</form> </div>";
+}
+
+    $lUser = $mysqli->query("SELECT id FROM User WHERE username = '$username'")
+        ->fetch_object()->id;
+
+    for($y = 1; $y <= $rows; $y++) {
+
+        $id = $mysqli->query("SELECT person_id FROM Bills WHERE id = '$y'")
+            ->fetch_object()->person_id;
+
+        if ($id == $lUser) {
+
+            $numEntry++;
 
 
+            $pMessage[] = $mysqli->query("SELECT DISTINCT message FROM Bills WHERE person_id = '$lUser' AND id = $y ")
+                ->fetch_object()->message;
 
+            $pAmount[] = $mysqli->query("SELECT amount FROM Bills WHERE person_id = '$lUser' AND id = $y ")
+                ->fetch_object()->amount;
+
+            $pDate[] = $mysqli->query("SELECT date FROM Bills WHERE person_id = '$lUser' AND id = $y")
+                ->fetch_object()->date;
+        }
+    }
+
+    echo "<td>Bill Info for: \"$username\" </td>
+
+<tr>
+    <td colspan = \"10\">
+        <div class=\"scrollit\", style=\"width: 80%\", border: 5px solid red>
+            <table style=\"width: 80%\">
+                
+                <tr>
+                     <th><tab5>Message: </tab5></th>
+                     <th><tab5>Amount</tab5></th>
+                      <th><tab5>Date: </tab5></th>
+                 </tr>
+                ";
+
+    for ($x = 0; $x < $numEntry; $x++){
+
+        echo " <tr><td > $pMessage[$x] </td ><td > $pAmount[$x]</td ><td > $pDate[$x] </td ></tr> ";
+    };
+
+    echo "
+            </table>
+        </div>
+    </td>
+</tr>
+";
+
+}
+?>
 
 </body>
 
