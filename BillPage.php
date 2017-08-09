@@ -14,10 +14,12 @@ session_start();
 
 #For testing purposes
 #$_SESSION["username"] = "Doctorman"; #Doctorman
-
-$username = $_SESSION['username'];
-$password = $_SESSION['password'];
-
+if($_SESSION['logged_in'] == TRUE){
+    $username = $_SESSION['username'];
+    $password = $_SESSION['password'];
+}else{
+    header("Location:login.php");
+}
 
 
 
