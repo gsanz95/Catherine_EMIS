@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2017 at 10:41 PM
+-- Generation Time: Aug 11, 2017 at 12:44 AM
 -- Server version: 5.7.19-0ubuntu0.16.04.1
--- PHP Version: 7.0.18-0ubuntu0.16.04.1
+-- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -47,7 +47,7 @@ CREATE TABLE `MedicalChart` (
 --
 
 INSERT INTO `MedicalChart` (`id`, `person_id`, `doctor_id`, `vitals_date`, `blood_press`, `weight`, `height`, `temp`, `blood_sugar`, `diagnosis`, `treatment`, `prescription`, `lab_test`) VALUES
-(1, 2, 5, '2017-07-26', '123/456', 2147483647, 20, 456, 456, 'died', 'none', 'all', 'many');
+(1, 2, 7, '2017-07-26', '128/300', 112, 3333, 90, 576, 'lets try this instead', 'none', 'all', 'many');
 
 --
 -- Indexes for dumped tables

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2017 at 10:40 PM
+-- Generation Time: Aug 11, 2017 at 12:43 AM
 -- Server version: 5.7.19-0ubuntu0.16.04.1
--- PHP Version: 7.0.18-0ubuntu0.16.04.1
+-- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -46,16 +46,18 @@ CREATE TABLE `AccountInfo` (
   `emerg_first` varchar(100) NOT NULL,
   `emerg_last` varchar(100) NOT NULL,
   `emerg_phone` varchar(50) NOT NULL,
-  `gender` varchar(100) NOT NULL
+  `gender` varchar(100) NOT NULL,
+  `Doctor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `AccountInfo`
 --
 
-INSERT INTO `AccountInfo` (`id`, `user_id`, `middle_name`, `dob`, `add_street`, `zip`, `state`, `city`, `appart_num`, `home_phone`, `cell_phone`, `email`, `ssn`, `insur_comp`, `insur_group_id`, `insur_policy_num`, `emerg_first`, `emerg_last`, `emerg_phone`, `gender`) VALUES
-(1, 2, 'asdf', '2017-07-12', 'asdf', 45678, 'asdf', 'asdf', 123, '555-5555', '555-5555', 'asdf', 321654987, 'asdf', 21, 3213546, 'asdf', 'asdf', '555-5555', ''),
-(2, 4, 'squish', '2017-07-12', '345 highway street', 45689, 'tom land', 'city', 45, '1234567896', '1234567896', 'frogger.gmail', 1, 'Dont get run over', 12, 32145, 'grogger', 'emerglast', '1245421234', '');
+INSERT INTO `AccountInfo` (`id`, `user_id`, `middle_name`, `dob`, `add_street`, `zip`, `state`, `city`, `appart_num`, `home_phone`, `cell_phone`, `email`, `ssn`, `insur_comp`, `insur_group_id`, `insur_policy_num`, `emerg_first`, `emerg_last`, `emerg_phone`, `gender`, `Doctor_id`) VALUES
+(1, 2, 'asdf', '2017-07-12', 'asdf', 45678, 'asdf', 'asdf', 123, '555-5555', '555-5555', 'asdf', 321654987, 'asdf', 21, 3213546, 'asdf', 'asdf', '555-5555', '', 4),
+(2, 4, 'squish', '2017-07-12', '345 highway street', 45689, 'tom land', 'city', 45, '1234567896', '1234567896', 'frogger.gmail', 1, 'Dont get run over', 12, 32145, 'grogger', 'emerglast', '1245421234', '', 0),
+(9, 48, 'ka;hdg', '12/12/1212', 'lga;h', 78934, 'Texas', 'SADF', 123, '123135', '1245523', 'hal;heha', 125523, 'a;dhg;h', 1245, 1254564, 'lah;ldhg', ';alhsdg;h', '123456', 'female', 0);
 
 --
 -- Indexes for dumped tables
@@ -75,7 +77,7 @@ ALTER TABLE `AccountInfo`
 -- AUTO_INCREMENT for table `AccountInfo`
 --
 ALTER TABLE `AccountInfo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

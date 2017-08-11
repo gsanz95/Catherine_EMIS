@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2017 at 10:40 PM
+-- Generation Time: Aug 11, 2017 at 12:44 AM
 -- Server version: 5.7.19-0ubuntu0.16.04.1
--- PHP Version: 7.0.18-0ubuntu0.16.04.1
+-- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -39,8 +39,10 @@ CREATE TABLE `Bills` (
 --
 
 INSERT INTO `Bills` (`id`, `person_id`, `amount`, `message`, `date`) VALUES
-(1, 2, 123.3, 'Broken toe\'s', '2017-07-11 05:00:00'),
-(2, 4, 4562.52, 'Lots of problems', '2017-07-29 05:00:00');
+(1, 2, 12000, 'i dont Know', '2017-08-04 04:25:47'),
+(2, 4, 20, 'lots of stuff', '2017-08-03 15:18:05'),
+(3, 5, 90000, 'both legs exploded now', '2017-08-04 04:25:47'),
+(4, 5, 562, 'stuff', '2017-08-04 05:08:51');
 
 --
 -- Indexes for dumped tables
@@ -60,7 +62,7 @@ ALTER TABLE `Bills`
 -- AUTO_INCREMENT for table `Bills`
 --
 ALTER TABLE `Bills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
