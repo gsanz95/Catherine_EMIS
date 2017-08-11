@@ -1,23 +1,18 @@
-<!--reated by PhpStorm.
- * User: stefan
- * Date: 8/2/17
- * Time: 2:31 PM
- */
--->
 <!DOCTYPE html>
-
 <?php
+/**
+ * Created by PhpStorm.
+ * User: stefan
+ * Date: 8/11/17
+ * Time: 1:04 AM
+ */
 
 session_start();
 
 
 #For testing purposes
-#$_SESSION["username"] = "Doctorman"; #Doctorman
+$_SESSION["username"] = "Doctorman"; #Doctorman
 #$_SESSION['logged_in'] = TRUE;
-
-
-
-
 
 
 #Login to SQL database
@@ -34,15 +29,15 @@ if($_SESSION['logged_in'] == TRUE){
 }
 
 
-
-
 $lUser = $mysqli->query("SELECT id FROM User WHERE username = '$username'")
     ->fetch_object()->id;
 
 $userType = $mysqli->query("SELECT type FROM User WHERE username = '$username'")
     ->fetch_object()->type;
 
-
+    $message = 'sup';
+    $amount = '6666';
+    $date ='2017-12-12';
 
 
 ?>
@@ -67,15 +62,6 @@ $userType = $mysqli->query("SELECT type FROM User WHERE username = '$username'")
             background-color: #3e4444;
             color: white;
             font-family: "Trebuchet MS";
-        }
-
-	.logout_button
-        {
-            background-color: #e20000;
-            color: white;
-            border: medium none;
-            border-radius: 3px;
-            font-size-adjust: inherit;
         }
 
         .out {
@@ -141,8 +127,6 @@ $userType = $mysqli->query("SELECT type FROM User WHERE username = '$username'")
         }
 
         tab5{ padding-right: 20em;}
-
-	
 
         table, td{
 
@@ -220,189 +204,67 @@ for($y = 1; $y <= $rows; $y++) {
     <li><a href="/BillPage.php">Bill</a></li>
     <li><a href="/PersonalInfo.php">Personal Information</a></li>
     <li><a href="/MedicalInfo.php">Medical Information</a></li>
-	<form action ="logout.php">
-    <button type="submit" class="logout_button out" value="Logout">Logout</button>
-	</form>
+    <button type="submit" class="button out" value="Logout">Logout</button>
 </ul>
 
 
 <div class="div_below_header"></div>
 
 <?php
+echo "<th><p>Enter Bill Information</p></th>";
 
-if($userType == 'U') {
+echo "<div class=\"container\"> ";
+echo "<form action = \"BillPage.php\">"; #action="/BillPage.php\
 
-    echo "<td>Bill Info for: \"$username\" </td>
 
-<tr>
-    <td colspan = \"10\">
-        <div class=\"scrollit\", style=\"width: 80%\", border: 5px solid red>
-            <table style=\"width: 80%\">
-                
-                <tr>
-                     <th><tab5>Message: </tab5></th>
-                     <th><tab5>Amount</tab5></th>
-                      <th><tab5>Date: </tab5></th>
-                 </tr>
-                ";
-
-    for ($x = 0; $x < $numEntry; $x++){
-
-        echo " <tr><td > $pMessage[$x] </td ><td > $pAmount[$x]</td ><td > $pDate[$x] </td ></tr> ";
-    };
-
-    echo "
-            </table>
-        </div>
-    </td>
-</tr>
-";
-}elseif($isButtonClicked == TRUE && $userType == 'D'){
-
-    echo "<th><p>Enter Bill Information</p></th>";
-
-    echo "<div class=\"container\"> ";
-    echo "<form>";
-
-    echo "<label for=\"username\">Message:</label>
+echo "<label for=\"$message\">Message:</label>
             <div class=\"div_small_separator\"></div>
             <input type=\"text\" id=\"username\" name=\"Message\"
-                   placeholder= \"$CurrUser\">
+                   >
             
             <div class=\"div_small_separator\"></div>
 
-    <label for=\"username\">Amount:</label>
+    <label for=\"$amount\">Amount:</label>
             <div class=\"div_small_separator\"></div>
             <input type=\"text\" id=\"username\" name=\"Amount\"
-                   placeholder= \"$CurrUser\">
+                   >
             
             <div class=\"div_small_separator\"></div>
     
-    <label for=\"username\">Date:</label>
+    <label for=\"$date\">Date:</label>
             <div class=\"div_small_separator\"></div>
             <input type=\"text\" id=\"username\" name=\"Date\"
-                   placeholder= \"$CurrUser\">
+                   >
             
             <div class=\"div_small_separator\"></div>
             
             <input type=\"submit\" value=\"Submit\">";
 
-    echo "</form>";
-    echo "</div>";
+if(isset($_POST['Message'])) {
 
+    echo("You clicked button one!");
 
+    $sql = "INSERT INTO Bills (id, person_id, amount, message, date)
+VALUES (12, 2, $amount, '$message', '$date')";
 
-
-}elseif($userType == 'D' || $userType == 'R' ){
-
-    $isButtonClicked = FALSE;
-
-
-    $username = "";
-    echo "Search Patient";
-
-    echo "<form  action =\"\" method = \"GET\" >
-                <input type = \"text\" name=\"query\" placeholder=\"Search\"/><br>
-                <input type=\"submit\" value=\"search\"/>
-                </form>";
-
-
-
-    if (!empty($_GET["query"])) {
-        $search = $_GET["query"];
-        # echo $_GET["query"];
-        # echo "You entered $search";
-        $queryResult = $mysqli->query("SELECT * FROM User WHERE username LIKE '%$search%' OR first LIKE '%$search%' OR last LIKE '%$search%'");
-        echo "<div class=\"container\">
-                    Results:";
-
-        while ($row = mysqli_fetch_array($queryResult)) {
-            $username = $row["username"];
-            $pfirstName = $row["first"];
-            $plastName = $row["last"];
-            $cUserType = $row["type"];
-            echo "<form action=\"\" method = \"GET\">
-                      <input type=\"hidden\" name = \"patient\" value = $username>
-                      <p>Type: $cUserType UserName: $username Name:$pfirstName,$plastName  </p>";
-
-        }
-        echo "</form> </div>";
+    if ($mysqli->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $mysqli->error;
     }
-
-    $lUser = $mysqli->query("SELECT id FROM User WHERE username = '$username'")
-        ->fetch_object()->id;
-
-    for($y = 1; $y <= $rows; $y++) {
-
-        $id = $mysqli->query("SELECT person_id FROM Bills WHERE id = '$y'")
-            ->fetch_object()->person_id;
-
-        if ($id == $lUser) {
-
-            $numEntry++;
-
-
-            $pMessage[] = $mysqli->query("SELECT DISTINCT message FROM Bills WHERE person_id = '$lUser' AND id = $y ")
-                ->fetch_object()->message;
-
-            $pAmount[] = $mysqli->query("SELECT amount FROM Bills WHERE person_id = '$lUser' AND id = $y ")
-                ->fetch_object()->amount;
-
-            $pDate[] = $mysqli->query("SELECT date FROM Bills WHERE person_id = '$lUser' AND id = $y")
-                ->fetch_object()->date;
-
-
-        }
-    }
-
-    echo "<td>Bill Info for: \"$username\"</td>
-
-<tr>
-    <td colspan = \"10\">
-        <div class=\"scrollit\", style=\"width: 80%\", border: 5px solid red>
-            <table style=\"width: 80%\">
-                
-                <tr>
-                     <th><tab5>Message: </tab5></th>
-                     <th><tab5>Amount</tab5></th>
-                      <th><tab5>Date: </tab5></th>
-                 </tr>
-                ";
-
-    for ($x = 0; $x < $numEntry; $x++){
-
-        echo " <tr><td > $pMessage[$x] </td ><td > $pAmount[$x]</td ><td > $pDate[$x] </td ></tr> ";
-    };
-
-    echo "
-            </table>
-        </div>
-    </td>
-</tr>
+}
 
 
 
-";
-
-    echo "<div class=\"container\"> ";
-    echo "<form action=\"/EnterBill.php\">";
+echo "</form>";
 
 
+echo "</div>";
 
 
-
-    echo "<input style='position: absolute' type=\"submit\"  value='Enter Bill' href = \"\"/>";
-
-
-    echo "</form>";
-    echo "</div>";
-
-
-
-
-}#end elseif
 
 ?>
+
 
 </body>
 

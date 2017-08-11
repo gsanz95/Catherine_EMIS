@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+	                                                  /* MedicalInfo.php by Felipe Garcia */
 					/**Start Session to be able to use $_SESSION variable */
     session_start();
 					/* Connect to MySql Databas                           */
@@ -8,11 +9,15 @@ $mysqli = mysqli_connect("localhost", "group", "group5", "group");
     if($mysqli->connect_error) {
         die("Connection failed: " . $mysqli->connect_error);
     }
+   if(!isset($_SESSION['logged_in']) || $_SESSION['logged_in']==false){
+	header("Location:login.php");
+   }
 					/* Test Code */
 #echo "connected successfully!";
 #$_SESSION["username"] = "asdf";
 #$_SESSION["username"] = "Doctorman";
-				
+
+/* I'm not sure if this works like I want it; Delete "selected patient" if page is reloaded"*/				
 if($_SESSION["update"] == false) {
     $patient = null;
 }
@@ -22,7 +27,7 @@ if(!empty($_GET["patient"])){
     $patient = $_SESSION["patient"];
 
 }
-#$_SESSION["update"] == false;
+$_SESSION["update"] == false;
 ?>
 
 					
@@ -153,6 +158,7 @@ if(!empty($_GET["patient"])){
         <li class="buttons_in_bar"><a href="/MedicalInfo.php">Medical Chart</a></li>
         <form action ="logout.php">
 	<button type="submit" class="logout_button out" value="Logout">Logout</button>
+	</form>
     </ul>
 
 
@@ -477,10 +483,12 @@ if(!empty($_GET["patient"])){
           $query = "UPDATE MedicalChart SET vitals_date = '$nVD', blood_press = '$nBP', weight = '$nW', height = '$nH', 
                                                    temp = '$nT' , blood_sugar = '$nBS', diagnosis = '$nD', treatment = '$nTRE', 
                                            prescription = '$nP' , lab_test = '$nLT'WHERE person_id = '$patientID'";
-            echo $query;
+            # Test Lines
+
+            #echo $query;
             $queryResult = $mysqli->query($query);
             }
-		printf("%s \n", $mysqli->error);
+	    #printf("%s \n", $mysqli->error);
 
 
 				        /* Search Bar for Doctor and Nurse  */	
@@ -503,9 +511,8 @@ if(!empty($_GET["patient"])){
            # echo $_GET["query"];
            # echo "You entered $search";
             $queryResult = $mysqli->query("SELECT * FROM User WHERE username LIKE '%$search%' OR first LIKE '%$search%' OR last LIKE '%$search%'");
-            echo "<div class=\"container\">
-                    Results:";
-
+                 echo "<div class=\"container\">";
+		 echo "Results:";
             while ($row = mysqli_fetch_array($queryResult)) {
                 $username = $row["username"];
                 $pfirstName = $row["first"];
@@ -515,8 +522,9 @@ if(!empty($_GET["patient"])){
                       <input type=\"hidden\" name = \"patient\" value = $username>
                       <p>Type: $cUserType UserName: $username Name:$pfirstName,$plastName <input type = 'submit' name =\"$username\" value = \"choose\"> </p>";
 
+            echo "</form>";
             }
-            echo "</form> </div>";
+	echo"</div>";
         }
     }
 

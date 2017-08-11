@@ -101,8 +101,8 @@
         {
             display: inline-block;
             background-color: #bcb8ba;
-            padding: 40px;
-            margin-left: 400px;
+            padding: 20px;
+            margin-left: 40%;
             font-size: 30px;
             text-align: center;
 	    color: white;
