@@ -7,41 +7,59 @@
  */
     session_start();
 
+    $username = $_SESSION['username'];
+    $password = $_SESSION['password'];
+
+    echo "$username";
+    echo "$password";
+
     if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true)
     {
-        header("Location:homepage.html");
+        header("Location:homepage.php");
     }
+
+    /*Connecting to the sql Server*/
     $dbhost='127.0.0.1';
     $dbuser='group';
     $dbpass='group5';
     $myconnect = mysqli_connect($dbhost,$dbuser,$dbpass,'group');
 
-    $message = '';
 
-    if (isset($_POST['username']) && isset($_POST['password']))
+    if(!$myconnect)
     {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+	die("Connection Failed: ".mysqli_connect_error());
+    }
 
-        $sql = $myconnect->query("SELECT * from USER WHERE username=$username and password = '$password") or die("Connection Failed: ".mysqli_connect_error());
-        echo $sql;
-        $result = $sql->fetch_object();
-        if($result->username == $username && $result->password == $password)
+    $message = '';
+	echo "right before if";
+    /*After connecting this will make sure the login credentials are correct*/
+    if (isset($username) && isset($password))
+    {
+	echo "Inside the if";
+	
+        $sql = "SELECT * FROM User WHERE username= '$username' AND password = '$password'";
+        $result = mysqli_query($myconnect,$sql);
+        $val = mysqli_fetch_object($result);
+
+	echo "$val->username";
+	echo "$val->password";
+
+        if(($val->username == $username) && ($val->password == $password))
         {
-            header("Location:homepage.html");
+	    $_SESSION['logged_in'] = true;
+            header("Location:homepage.php");
         }
         else
         {
             $message = 'Username and Password dont match';
-            header("refresh:5;url:login.html");
+            header("refresh:2;url:login.php");
             echo $message;
-
         }
     }
     else
     {
             $message = 'Please enter your Username and Password';
-            header("refresh:5;url:login.html");
+            header("refresh:2;url:login.php");
             echo $message;
     }
 

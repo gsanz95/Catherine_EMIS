@@ -22,7 +22,7 @@ session_start();
 
 
     #Login to SQL database
-    $mysqli = mysqli_connect("localhost", "root", "slowpokesale", "mysql");
+    $mysqli = mysqli_connect("localhost", "group", "group5", "group");
      if($mysqli->connect_error) {
          die("Connection failed: " . $mysqli->connect_error);
      }
@@ -202,9 +202,9 @@ for($y = 1; $y <= $rows; $y++) {
 
 
 <ul>
-    <li><a href="/CatherineEMIS/homepage.php">Home</a></li>
-    <li><a href="/CatherineEMIS/BillPage.php">Bill</a></li>
-    <li><a href="/CatherineEMIS/PersonalInfo.php">Personal Information</a></li>
+    <li><a href="/homepage.php">Home</a></li>
+    <li><a href="/BillPage.php">Bill</a></li>
+    <li><a href="/PersonalInfo.php">Personal Information</a></li>
     <li><a href="/MedicalInfo.php">Medical Information</a></li>
     <button type="submit" class="button out" value="Logout">Logout</button>
 </ul>

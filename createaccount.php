@@ -1,24 +1,32 @@
 <?php
-session_start();
-$_SESSION['message']= '';
 
+session_start();
+
+if(isset($_SESSION['message']))
+{
+	$msg = $_SESSION['message'];
+	echo $msg;
+}
 
 $dbhost='127.0.0.1';
-$dbuser='root';
-$dbpass='password';
-$myconnect = mysqli_connect($dbhost,$dbuser,$dbpass,'CatherineEMIS');
+$dbuser='group';
+$dbpass='group5';
+$myconnect = mysqli_connect($dbhost,$dbuser,$dbpass,'group');
 
 if(!$myconnect)
 {
     die("Connection Failed: ".mysqli_connect_error());
 }
+
+if(isset($_POST['submit'])){
+	//echo "HEEEEEEEEEEEEEEEELLLLLLLLLOOOOOOO";
     if($_POST['password'] == $_POST['confirmpassword'])
     {
         if(isset($_POST['username']))
         {
-            $username = $myconnect->real_escape_string($_POST['username']);
+            $username = $_POST['username'];
         }
-        $email = $myconnect->real_escape_string($_POST['email']);
+        $email = $_POST['email'];
         $password = $_POST['password'];
         $first = $_POST['first'];
         $middle = $_POST['middle'];
@@ -40,48 +48,50 @@ if(!$myconnect)
         $ephone = $_POST['ephone'];
         $gender = $_POST['gender'];
 
-        /*Saving information in the session for future pages*/
+
+        //Saving information in the session for future pages
         $_SESSION['username']= $username;
         $_SESSION['first_name']= $first;
         $_SESSION['last_name']= $last;
 
-        /*echo $first;
-        echo $password;
-        echo $last;*/
 
         $sql = "INSERT INTO User (first, last, username, password, type)
                 VALUES('$first','$last','$username','$password','U')";
-        $res1 = mysqli_query($myconnect,$sql);
+        $res1 = mysqli_query($myconnect,$sql) or die("Maybe sql isn't working!");
 
-        $user_id = "SELECT id FROM User WHERE username = '$username'";
-        $user_id = mysqli_fetch_object($user_id);
+        $sql2 = "SELECT id FROM User WHERE username = '$username'";
+        $res2 = mysqli_query($myconnect,$sql2) or die("Maybe sql2 isn't working!");
+	$id = mysqli_fetch_object($res2);
+	$truid = $id->id;
 
-        $sql2= "INSERT INTO `AccountInfo`(user_id`, `middle_name`, `dob`, `add_street`, `zip`, `state`, `city`, `appart_num`, `home_phone`, `cell_phone`, `email`, `ssn`, `insur_comp`, `insur_group_id`, `insur_policy_num`, `emerg_first`, `emerg_last`, `emerg_phone`, `gender`)
-                VALUES ($user_id,$middle,$dob,$street,$zip,$state,$city,$apartmentnum,$homeph,$cellph,$email,$ssn,$insurcomp,$insurid,$insurnum,$efirst,$elast,$ephone,$gender)";
+        $sql3 = "INSERT INTO AccountInfo (user_id, middle_name, dob, add_street, zip, state, city, appart_num, home_phone, cell_phone, email, ssn, insur_comp, insur_group_id, insur_policy_num, emerg_first, emerg_last, emerg_phone, gender, Doctor_id) VALUES ('$truid','$middle','$dob','$street','$zip','$state','$city','$apartmentnum','$homeph','$cellph','$email','$ssn','$insurcomp','$insurid','$insurnum','$efirst','$elast','$ephone','$gender','0')";
 
-                /*"UPDATE AccountInfo SET middle_name='$middle',dob ='$dob',add_street='$street',zip='$zip',state='$state',
-                city='$city',appart_num='$apartmentnum',home_phone='$homeph',cell_phone='$cellph',email='$email',
-                ssn='$ssn',insur_comp='$insurcomp',insur_group_id='$insurid',insur_policy_num='$insurnum',
-                emerg_first='$efirst',emerg_last='$elast',emerg_phone='$ephone',gender='$gender' WHERE user_id='$user_id'";*/
+        $res3= mysqli_query($myconnect,$sql3) or die(mysqli_error($myconnect));
 
-        /*User ID saved in the session*/
-        $_SESSION['user_id']= $user_id;
+        //User ID saved in the session
+        $_SESSION['user_id']= "$truid";
 
-        if(mysqli_query($sql) == true && mysqli_query($sql2) == true)
+        if((res1==true) && (res2==true) && (res3==true))
         {
-            $SESSION['message'] = "Account Successfully Created";
+	    $_SESSION['logged_in'] = true;
+            $_SESSION['message'] = "Account Successfully Created";
             header("Location:homepage.php");
 
         }
         else
         {
-            $_SESSION['message']= "User can't be added to database!";
+            $_SESSION['message']= "User couldn't be added to database!";
+            session_destroy();
+            header("Location:createaccount.php");
         }
     }
     else
     {
         $_SESSION['message']= "Passwords don't match!";
+        session_destroy();
+        header("Location:createaccount.php");
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,32 +117,30 @@ if(!$myconnect)
 </head>
 <body>
 
-<link rel="stylesheet" type="text/css" href="styles.css"/>
-
 <h1>Catherine EMIS</h1>
 <div class="div_border_bottom"></div>
-<ul>
+<!--<ul>
     <li><a href="/CatherineEMIS/BillPageTest.html">Bill</a></li>
     <li><a href="/CatherineEMIS/PersonalInfo.html">Personal Information</a></li>
     <li><a href="/MedicalInfo.html">Medical Information</a></li>
     <button type="submit" class="button out" value="Logout">Logout</button>
-</ul>
+</ul>-->
 
 
-<form method="POST" class="form-group" action="homepage.html" >
+<form method="post" action="<?php echo $_SERVER[PHP_SELF]; ?>">
     <div class="container">
         <table>
             <tr>
                 <td>Username:</td>
-                <td><input type="ctext" name="username" required></td>
+                <td><input type="ctext" name="username" id="username" required></td>
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><input  type="password" name="password" required></td>
+                <td><input  type="password" name="password" id="password" required></td>
             </tr>
             <tr>
                 <td>Confirm Password:</td>
-                <td><input type="password" name="confirmpassword" required></td>
+                <td><input type="password" name="confirmpassword" id ="confirmpassword" required></td>
             </tr>
             <tr>
                 <td>Email:</td>
@@ -178,7 +186,7 @@ if(!$myconnect)
                 <td><input type="ctext" name="city" required></td>
             </tr>
             <tr>
-                <td>Apt. #:</td>
+                <td>Apt. '#':</td>
                 <td><input type="ctext" name="apartmentnum"></td>
             </tr>
             <tr>
@@ -218,7 +226,7 @@ if(!$myconnect)
                 <td><input type="ctext" name="ephone"></td>
             </tr>
         </table>
-        <input type="submit" class="button" value="Submit" />
+        <input type="submit" name="submit" class="button" value="submit"/>
     </div>
 </form>
 </body>
