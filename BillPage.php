@@ -7,13 +7,14 @@
  */
 -->
 <!DOCTYPE html>
+
 <?php
 
 session_start();
 
 
 #For testing purposes
-#$_SESSION["username"] = "Doctorman"; #Doctorman
+$_SESSION["username"] = "Doctorman"; #Doctorman
 #$_SESSION['logged_in'] = TRUE;
 
 
@@ -21,11 +22,11 @@ session_start();
 
 
 
-    #Login to SQL database
-    $mysqli = mysqli_connect("localhost", "group", "group5", "group");
-     if($mysqli->connect_error) {
-         die("Connection failed: " . $mysqli->connect_error);
-     }
+#Login to SQL database
+$mysqli = mysqli_connect("localhost", "root", "slowpokesale", "mysql");
+if($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
 
 if($_SESSION['logged_in'] == TRUE){
     $username = $_SESSION['username'];
@@ -34,11 +35,14 @@ if($_SESSION['logged_in'] == TRUE){
     header("Location:login.php");
 }
 
-     $lUser = $mysqli->query("SELECT id FROM User WHERE username = '$username'")
-         ->fetch_object()->id;
 
-    $userType = $mysqli->query("SELECT type FROM User WHERE username = '$username'")
-        ->fetch_object()->type;
+
+
+$lUser = $mysqli->query("SELECT id FROM User WHERE username = '$username'")
+    ->fetch_object()->id;
+
+$userType = $mysqli->query("SELECT type FROM User WHERE username = '$username'")
+    ->fetch_object()->type;
 
 
 
@@ -131,15 +135,15 @@ if($_SESSION['logged_in'] == TRUE){
 
         tab5{ padding-right: 20em;}
 
-          table, td{
+        table, td{
 
 
 
-             padding: 1px;
-              border: 1px solid powderblue;
-             border-collapse: collapse;
-              background-color: white;
-              align="center"
+            padding: 1px;
+            border: 1px solid powderblue;
+            border-collapse: collapse;
+            background-color: white;
+            align="center"
 
 
         }
@@ -196,15 +200,16 @@ for($y = 1; $y <= $rows; $y++) {
         $pDate[] = $mysqli->query("SELECT date FROM Bills WHERE person_id = '$lUser' AND id = $y")
             ->fetch_object()->date;
     }
+
+
 }
 ?>
 
 
-
 <ul>
-    <li><a href="/homepage.php">Home</a></li>
-    <li><a href="/BillPage.php">Bill</a></li>
-    <li><a href="/PersonalInfo.php">Personal Information</a></li>
+    <li><a href="/CatherineEMIS/homepage.php">Home</a></li>
+    <li><a href="/CatherineEMIS/BillPage.php">Bill</a></li>
+    <li><a href="/CatherineEMIS/PersonalInfo.php">Personal Information</a></li>
     <li><a href="/MedicalInfo.php">Medical Information</a></li>
     <button type="submit" class="button out" value="Logout">Logout</button>
 </ul>
@@ -230,18 +235,58 @@ if($userType == 'U') {
                  </tr>
                 ";
 
-                for ($x = 0; $x < $numEntry; $x++){
+    for ($x = 0; $x < $numEntry; $x++){
 
-                       echo " <tr><td > $pMessage[$x] </td ><td > $pAmount[$x]</td ><td > $pDate[$x] </td ></tr> ";
-                 };
+        echo " <tr><td > $pMessage[$x] </td ><td > $pAmount[$x]</td ><td > $pDate[$x] </td ></tr> ";
+    };
 
-                echo "
+    echo "
             </table>
         </div>
     </td>
 </tr>
 ";
-}elseif($userType == 'D' || $userType == 'R'){
+}elseif($isButtonClicked == TRUE && $userType == 'D'){
+
+    echo "<th><p>Enter Bill Information</p></th>";
+
+    echo "<div class=\"container\"> ";
+    echo "<form>";
+
+    echo "<label for=\"username\">Message:</label>
+            <div class=\"div_small_separator\"></div>
+            <input type=\"text\" id=\"username\" name=\"Message\"
+                   placeholder= \"$CurrUser\">
+            
+            <div class=\"div_small_separator\"></div>
+
+    <label for=\"username\">Amount:</label>
+            <div class=\"div_small_separator\"></div>
+            <input type=\"text\" id=\"username\" name=\"Amount\"
+                   placeholder= \"$CurrUser\">
+            
+            <div class=\"div_small_separator\"></div>
+    
+    <label for=\"username\">Date:</label>
+            <div class=\"div_small_separator\"></div>
+            <input type=\"text\" id=\"username\" name=\"Date\"
+                   placeholder= \"$CurrUser\">
+            
+            <div class=\"div_small_separator\"></div>
+            
+            <input type=\"submit\" value=\"Submit\">";
+
+    echo "</form>";
+    echo "</div>";
+
+
+
+
+}elseif($userType == 'D' || $userType == 'R' ){
+
+    $isButtonClicked = FALSE;
+
+
     $username = "";
     echo "Search Patient";
 
@@ -252,26 +297,26 @@ if($userType == 'U') {
 
 
 
-if (!empty($_GET["query"])) {
-    $search = $_GET["query"];
-    # echo $_GET["query"];
-    # echo "You entered $search";
-    $queryResult = $mysqli->query("SELECT * FROM User WHERE username LIKE '%$search%' OR first LIKE '%$search%' OR last LIKE '%$search%'");
-    echo "<div class=\"container\">
+    if (!empty($_GET["query"])) {
+        $search = $_GET["query"];
+        # echo $_GET["query"];
+        # echo "You entered $search";
+        $queryResult = $mysqli->query("SELECT * FROM User WHERE username LIKE '%$search%' OR first LIKE '%$search%' OR last LIKE '%$search%'");
+        echo "<div class=\"container\">
                     Results:";
 
-    while ($row = mysqli_fetch_array($queryResult)) {
-        $username = $row["username"];
-        $pfirstName = $row["first"];
-        $plastName = $row["last"];
-        $cUserType = $row["type"];
-        echo "<form action=\"\" method = \"GET\">
+        while ($row = mysqli_fetch_array($queryResult)) {
+            $username = $row["username"];
+            $pfirstName = $row["first"];
+            $plastName = $row["last"];
+            $cUserType = $row["type"];
+            echo "<form action=\"\" method = \"GET\">
                       <input type=\"hidden\" name = \"patient\" value = $username>
                       <p>Type: $cUserType UserName: $username Name:$pfirstName,$plastName  </p>";
 
+        }
+        echo "</form> </div>";
     }
-    echo "</form> </div>";
-}
 
     $lUser = $mysqli->query("SELECT id FROM User WHERE username = '$username'")
         ->fetch_object()->id;
@@ -294,10 +339,12 @@ if (!empty($_GET["query"])) {
 
             $pDate[] = $mysqli->query("SELECT date FROM Bills WHERE person_id = '$lUser' AND id = $y")
                 ->fetch_object()->date;
+
+
         }
     }
 
-    echo "<td>Bill Info for: \"$username\" </td>
+    echo "<td>Bill Info for: \"$username\"</td>
 
 <tr>
     <td colspan = \"10\">
@@ -325,46 +372,22 @@ if (!empty($_GET["query"])) {
 
 
 ";
-    $isButtonClicked = FALSE;
+
+    echo "<div class=\"container\"> ";
+    echo "<form action=\"/CatherineEMIS/EnterBill.php\">";
+
+
+
+
+
     echo "<input style='position: absolute' type=\"submit\"  value='Enter Bill' href = \"\"/>";
-    if ( isset( $_POST['Enter Bill'] ) ) { }
+
+
+    echo "</form>";
+    echo "</div>";
 
 
 
-
-
-
-}elseif($userType == 'P'){
-    echo "<th>Enter Bill Information</th>";
-
-    echo "
-            
-        
-                      <!-- Message -->
-                        <div class =\"div_small_separator\"></div>
-                        <label for=\"Diagnosis\">Message</label>
-                        <div class =\"div_small_separator\"></div>
-                        <input type =\"text\" id =\"Diagnosis\" name =\"Diagnosis\"
-                                placeholder= \"$medChart->Message\">        
-                                
-                      <!-- Amount -->
-                        <div class =\"div_small_separator\"></div>
-                        <label for=\"Treatment\">Amount:</label>
-                        <div class =\"div_small_separator\"></div>
-                        <input type =\"text\" id =\"Treatment\" name =\"Treatment\"
-                                placeholder= \"$medChart->Amount\">
-                                
-                      <!-- Date -->
-                        <div class =\"div_small_separator\"></div>
-                        <label for=\"Prescription\">Date:</label>
-                        <div class =\"div_small_separator\"></div>
-                        <input type =\"text\" id =\"Prescription\" name =\"Prescription\"
-                                placeholder= \"$medChart->Date\">
-                              
-                                
-                        <div class =\"div_small_separator\"></div>
-                        <input type=\"hidden\" name = \"patient\" value = $patient>
-                        <input type =\"submit\" value =\"update\"/>";
 
 }#end elseif
 
