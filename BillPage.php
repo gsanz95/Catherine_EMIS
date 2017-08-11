@@ -17,12 +17,7 @@ session_start();
 #$_SESSION['logged_in'] = TRUE;
 
 
-if($_SESSION['logged_in'] == TRUE){
-    $username = $_SESSION['username'];
-    $password = $_SESSION['password'];
-}else{
-    header("Location:login.php");
-}
+
 
 
 
@@ -32,12 +27,21 @@ if($_SESSION['logged_in'] == TRUE){
          die("Connection failed: " . $mysqli->connect_error);
      }
 
+if($_SESSION['logged_in'] == TRUE){
+    $username = $_SESSION['username'];
+    $password = $_SESSION['password'];
+}else{
+    header("Location:login.php");
+}
+
      $lUser = $mysqli->query("SELECT id FROM User WHERE username = '$username'")
          ->fetch_object()->id;
 
     $userType = $mysqli->query("SELECT type FROM User WHERE username = '$username'")
         ->fetch_object()->type;
-    echo "$userType";
+
+
+
 
 ?>
 <html lang="en">
@@ -246,6 +250,8 @@ if($userType == 'U') {
                 <input type=\"submit\" value=\"search\"/>
                 </form>";
 
+
+
 if (!empty($_GET["query"])) {
     $search = $_GET["query"];
     # echo $_GET["query"];
@@ -315,9 +321,53 @@ if (!empty($_GET["query"])) {
         </div>
     </td>
 </tr>
-";
 
-}
+
+
+";
+    $isButtonClicked = FALSE;
+    echo "<input style='position: absolute' type=\"submit\"  value='Enter Bill' href = \"\"/>";
+    if ( isset( $_POST['Enter Bill'] ) ) { }
+
+
+
+
+
+
+}elseif($userType == 'P'){
+    echo "<th>Enter Bill Information</th>";
+
+    echo "
+            
+        
+                      <!-- Message -->
+                        <div class =\"div_small_separator\"></div>
+                        <label for=\"Diagnosis\">Message</label>
+                        <div class =\"div_small_separator\"></div>
+                        <input type =\"text\" id =\"Diagnosis\" name =\"Diagnosis\"
+                                placeholder= \"$medChart->Message\">        
+                                
+                      <!-- Amount -->
+                        <div class =\"div_small_separator\"></div>
+                        <label for=\"Treatment\">Amount:</label>
+                        <div class =\"div_small_separator\"></div>
+                        <input type =\"text\" id =\"Treatment\" name =\"Treatment\"
+                                placeholder= \"$medChart->Amount\">
+                                
+                      <!-- Date -->
+                        <div class =\"div_small_separator\"></div>
+                        <label for=\"Prescription\">Date:</label>
+                        <div class =\"div_small_separator\"></div>
+                        <input type =\"text\" id =\"Prescription\" name =\"Prescription\"
+                                placeholder= \"$medChart->Date\">
+                              
+                                
+                        <div class =\"div_small_separator\"></div>
+                        <input type=\"hidden\" name = \"patient\" value = $patient>
+                        <input type =\"submit\" value =\"update\"/>";
+
+}#end elseif
+
 ?>
 
 </body>
